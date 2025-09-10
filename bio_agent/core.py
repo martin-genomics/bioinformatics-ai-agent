@@ -5,6 +5,10 @@ from typing import Union, Dict, Tuple, List
 import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from enum import Enum
+from datetime import datetime
+
+import matplotlib
+matplotlib.use('Agg')
 
 class SequenceType(Enum):
     DNA = "DNA"
@@ -85,7 +89,8 @@ class BioAgent:
         """Plot amino acid composition as a bar chart."""
         if not composition:
             raise ValueError("No amino acid composition data available")
-            
+
+
         plt.figure(figsize=(12, 6))
         plt.bar(composition.keys(), composition.values())
         plt.title('Amino Acid Composition')
@@ -93,6 +98,8 @@ class BioAgent:
         plt.ylabel('Percentage')
         plt.xticks(rotation=45)
         plt.tight_layout()
+        plt.savefig(f'images/amino_acid_composition-{datetime.now()}.png',)
+        print(f"Plot saved as 'amino_acid_composition-{datetime.now()}.png'")
         plt.show()
     
     def get_reverse_complement(self, dna_sequence: str) -> str:
